@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwiftCart - Best E-Commerce Collection</title>
+    
+    <!-- Tailwind CSS & DaisyUI CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-base-100 text-base-content min-h-screen flex flex-col justify-between">
+
+    <!-- 1. Navbar -->
+    <header class="sticky top-0 z-50 bg-base-100 shadow-md">
+        <div class="navbar container mx-auto px-4">
+            <!-- Logo -->
+            <div class="navbar-start">
+                <a class="btn btn-ghost text-2xl font-bold text-primary">
+                    <i class="fa-solid me-1">🛒</i> SwiftCart
+                </a>
+            </div>
+
+            <!-- Menu Items (Desktop) -->
+            <div class="navbar-center hidden lg:flex">
+                <ul class="menu menu-horizontal px-1 font-semibold">
+                    <li><a class="text-primary">Home</a></li>
+                    <li><a>Products</a></li>
+                    <li><a>About</a></li>
+                    <li><a>Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Cart Icon / Mobile Menu -->
+            <div class="navbar-end gap-2">
+                <!-- Cart Button -->
+                <button onclick="openCartModal()" class="btn btn-ghost btn-circle relative">
+                    <div class="indicator">
+                        <i class="fa-solid fa-cart-shopping text-xl"></i>
+                        <span id="cart-count" class="badge badge-sm badge-primary indicator-item">0</span>
+                    </div>
+                </button>
+
+                <!-- Mobile Dropdown Menu -->
+                <div class="dropdown dropdown-end lg:hidden">
+                    <div tabindex="0" role="button" class="btn btn-ghost">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </div>
+                    <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 font-medium">
+                        <li><a>Home</a></li>
+                        <li><a>Products</a></li>
+                        <li><a>About</a></li>
+                        <li><a>Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 flex-grow">
+        <!-- 2. Banner / Hero Section -->
+        <section class="my-6 rounded-2xl overflow-hidden shadow-lg bg-cover bg-center text-white relative" style="background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1200');">
+            <div class="bg-black/60 p-12 md:p-20 text-center flex flex-col items-center justify-center min-h-[350px]">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4">Best Collection For You</h1>
+                <p class="text-lg md:text-xl max-w-xl mb-6 text-gray-200">Discover trending fashion, electronics, and accessories at unbeatable prices.</p>
+                <a href="#products-section" class="btn btn-primary text-white font-bold px-8">Shop Now</a>
+            </div>
+        </section>
+
+        <!-- 3. Features / Why Choose Us -->
+        <section class="my-12">
+            <h2 class="text-3xl font-bold text-center mb-8">Why Choose Us</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="card bg-base-200 shadow-sm p-6 text-center items-center">
+                    <i class="fa-solid fa-truck-fast text-4xl text-primary mb-3"></i>
+                    <h3 class="font-bold text-lg mb-1">Fast Delivery</h3>
+                    <p class="text-sm text-gray-500">Quick and reliable delivery straight to your doorstep.</p>
+                </div>
+                <div class="card bg-base-200 shadow-sm p-6 text-center items-center">
+                    <i class="fa-solid fa-headset text-4xl text-primary mb-3"></i>
+                    <h3 class="font-bold text-lg mb-1">24/7 Support</h3>
+                    <p class="text-sm text-gray-500">Dedicated support team ready to help anytime.</p>
+                </div>
+                <div class="card bg-base-200 shadow-sm p-6 text-center items-center">
+                    <i class="fa-solid fa-shield-halved text-4xl text-primary mb-3"></i>
+                    <h3 class="font-bold text-lg mb-1">Secure Payment</h3>
+                    <p class="text-sm text-gray-500">100% secure payment gateways for safe checkout.</p>
+                </div>
+                <div class="card bg-base-200 shadow-sm p-6 text-center items-center">
+                    <i class="fa-solid fa-rotate-left text-4xl text-primary mb-3"></i>
+                    <h3 class="font-bold text-lg mb-1">Easy Returns</h3>
+                    <p class="text-sm text-gray-500">Hassle-free 7-day return and exchange policy.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Dynamic Products & Category Section -->
+        <section id="products-section" class="my-12">
+            <h2 class="text-3xl font-bold text-center mb-6">Our Products</h2>
+
+            <!-- Category Filter Buttons -->
+            <div id="category-container" class="flex flex-wrap justify-center gap-2 mb-8">
+                <!-- Categories will be dynamically injected here via JS -->
+            </div>
+
+            <!-- Loading Spinner -->
+            <div id="loading-spinner" class="text-center my-12 hidden">
+                <span class="loading loading-spinner loading-lg text-primary"></span>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Product cards will be dynamically injected here via JS -->
+            </div>
+        </section>
+
+        <!-- 5. Newsletter Section -->
+        <section class="my-16 bg-primary text-primary-content rounded-2xl p-8 md:p-12 text-center">
+            <h2 class="text-3xl font-bold mb-2">Subscribe to Our Newsletter</h2>
+            <p class="mb-6 max-w-md mx-auto">Stay updated with our latest offers, new arrivals, and special discounts!</p>
+            <form onsubmit="event.preventDefault();" class="flex flex-col sm:flex-row justify-center max-w-md mx-auto gap-2">
+                <input type="email" placeholder="Enter your email" class="input input-bordered text-black w-full" required />
+                <button type="submit" class="btn btn-neutral">Subscribe</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- 6. Footer -->
+    <footer class="footer p-10 bg-neutral text-neutral-content">
+        <aside>
+            <p class="text-2xl font-bold">🛒 SwiftCart</p>
+            <p>Providing quality products since 2026.<br>All rights reserved.</p>
+        </aside> 
+        <nav>
+            <h6 class="footer-title">Quick Links</h6> 
+            <a class="link link-hover">Home</a>
+            <a class="link link-hover">Products</a>
+            <a class="link link-hover">About Us</a>
+            <a class="link link-hover">Contact</a>
+        </nav> 
+        <nav>
+            <h6 class="footer-title">Social Links</h6> 
+            <div class="grid grid-flow-col gap-4 text-xl">
+                <a class="link link-hover"><i class="fa-brands fa-facebook"></i></a>
+                <a class="link link-hover"><i class="fa-brands fa-twitter"></i></a>
+                <a class="link link-hover"><i class="fa-brands fa-instagram"></i></a>
+            </div>
+        </nav>
+    </footer>
+
+    <!-- Product Details Modal -->
+    <dialog id="product_modal" class="modal">
+        <div class="modal-box max-w-2xl">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <div id="modal-content" class="flex flex-col md:flex-row gap-6 mt-4">
+                <!-- Modal details injected dynamically -->
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Cart Summary Modal -->
+    <dialog id="cart_modal" class="modal">
+        <div class="modal-box max-w-lg">
+            <form method="dialog">
+                <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            </form>
+            <h3 class="font-bold text-xl mb-4">Your Shopping Cart</h3>
+            <div id="cart-items" class="divide-y max-h-60 overflow-y-auto mb-4">
+                <!-- Cart items list injected dynamically -->
+            </div>
+            <div class="flex justify-between items-center font-bold text-lg pt-4 border-t">
+                <span>Total Amount:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <div class="modal-action">
+                <button class="btn btn-primary w-full">Checkout</button>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Main JavaScript File -->
+    <script src="app.js"></script>
+</body>
+</html>
