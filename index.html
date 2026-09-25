@@ -16,7 +16,33 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="bg-base-100 text-base-content min-h-screen flex flex-col justify-between">
+<!-- Navigation Links -->
+<nav>
+  <a href="#" onclick="navigate('home')">Home</a>
+  <a href="#" onclick="navigate('products')">Products</a>
+  <a href="#" onclick="navigate('about')">About</a>
+  <a href="#" onclick="navigate('contact')">Contact</a>
+</nav>
 
+<!-- Sections -->
+<section id="home-section" class="page-section">
+  <h2>Welcome to SwiftCart!</h2>
+  <p>This is the main banner/home section.</p>
+</section>
+
+<section id="products-section" class="page-section hidden">
+  <!-- Apnar API product cards ebong category buttons gula ekhane thakbe -->
+</section>
+
+<section id="about-section" class="page-section hidden">
+  <h2>About Us</h2>
+  <p>Learn more about our e-commerce platform.</p>
+</section>
+
+<section id="contact-section" class="page-section hidden">
+  <h2>Contact Us</h2>
+  <p>Get in touch via email: support@swiftcart.com</p>
+</section>
     <!-- 1. Navbar -->
     <header class="sticky top-0 z-50 bg-base-100 shadow-md">
         <div class="navbar container mx-auto px-4">

@@ -14,6 +14,20 @@ const cartCount = document.getElementById("cart-count");
 const cartItemsContainer = document.getElementById("cart-items");
 const cartTotalElement = document.getElementById("cart-total");
 
+function navigate(sectionId) {
+  // 1. Sob section-ke age hidden banie din
+  const sections = document.querySelectorAll('.page-section');
+  sections.forEach(section => {
+    section.classList.add('hidden');
+  });
+
+  // 2. Jei section-e click kora hoise shudhu seta-er 'hidden' class tule din
+  const targetSection = document.getElementById(`${sectionId}-section`);
+  if (targetSection) {
+    targetSection.classList.remove('hidden');
+  }
+}
+
 // Initialize Application
 document.addEventListener("DOMContentLoaded", () => {
     loadCategories();
