@@ -14,19 +14,23 @@ const cartCount = document.getElementById("cart-count");
 const cartItemsContainer = document.getElementById("cart-items");
 const cartTotalElement = document.getElementById("cart-total");
 
-function navigate(sectionId) {
-  // 1. Sob section-ke age hidden banie din
+// Global Routing Function
+window.navigate = function(sectionId) {
+  // 1. Hide all page sections
   const sections = document.querySelectorAll('.page-section');
   sections.forEach(section => {
     section.classList.add('hidden');
   });
 
-  // 2. Jei section-e click kora hoise shudhu seta-er 'hidden' class tule din
+  // 2. Show target section
   const targetSection = document.getElementById(`${sectionId}-section`);
   if (targetSection) {
     targetSection.classList.remove('hidden');
   }
-}
+
+  // Smooth scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
 // Initialize Application
 document.addEventListener("DOMContentLoaded", () => {
@@ -36,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Helper Function: Toggle Loading Spinner
 const toggleSpinner = (isLoading) => {
+    if (!loadingSpinner || !productContainer) return;
     if (isLoading) {
         loadingSpinner.classList.remove("hidden");
         productContainer.classList.add("hidden");
@@ -60,6 +65,7 @@ const loadCategories = async () => {
 };
 
 const displayCategories = (categories) => {
+    if (!categoryContainer) return;
     categoryContainer.innerHTML = "";
 
     categories.forEach((category) => {
@@ -81,13 +87,16 @@ const loadProducts = async (url) => {
         displayProducts(data);
     } catch (error) {
         console.error("Error loading products:", error);
-        productContainer.innerHTML = `<p class="text-center text-error col-span-full">Failed to load products!</p>`;
+        if (productContainer) {
+            productContainer.innerHTML = `<p class="text-center text-error col-span-full">Failed to load products!</p>`;
+        }
     } finally {
         toggleSpinner(false);
     }
 };
 
 const displayProducts = (products) => {
+    if (!productContainer) return;
     productContainer.innerHTML = "";
 
     if (products.length === 0) {
@@ -130,7 +139,6 @@ const displayProducts = (products) => {
 
 // 3. Category Filter Handler
 const filterByCategory = (category, event) => {
-    // Active state toggle
     document.querySelectorAll(".category-btn").forEach(btn => btn.classList.remove("btn-primary", "active"));
     event.target.classList.add("btn-primary", "active");
 
@@ -144,6 +152,7 @@ const filterByCategory = (category, event) => {
 // 4. Single Product Modal Details
 const openProductDetails = async (id) => {
     const modalContent = document.getElementById("modal-content");
+    if (!modalContent) return;
     modalContent.innerHTML = `<span class="loading loading-spinner loading-lg text-primary mx-auto"></span>`;
     document.getElementById("product_modal").showModal();
 
@@ -190,10 +199,9 @@ const removeFromCart = (index) => {
 };
 
 const updateCartUI = () => {
-    // Update Badge Count
-    cartCount.innerText = cart.length;
-
-    // Render Cart Items
+    if (cartCount) cartCount.innerText = cart.length;
+    if (!cartItemsContainer) return;
+    
     cartItemsContainer.innerHTML = "";
     let total = 0;
 
@@ -220,10 +228,10 @@ const updateCartUI = () => {
         });
     }
 
-    // Update Total Amount
-    cartTotalElement.innerText = `$${total.toFixed(2)}`;
+    if (cartTotalElement) cartTotalElement.innerText = `$${total.toFixed(2)}`;
 };
 
-const openCartModal = () => {
-    document.getElementById("cart_modal").showModal();
+window.openCartModal = () => {
+    const modal = document.getElementById("cart_modal");
+    if (modal) modal.showModal();
 };
